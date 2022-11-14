@@ -73,13 +73,47 @@ public class App {
 		}
 	}
 	
+	public static boolean isNumber(String e) {
+		boolean is_op1 = e.equals("+");
+		boolean is_op2 = e.equals("*");
+		boolean is_op3 = e.equals("-");
+		boolean is_op4 = e.equals("/");
+		return !is_op1 && !is_op2 && !is_op3 && !is_op4;
+	}
+	
+	public static ArrayList<ArrayList<String>> split(ArrayList<String> liste_gauche, ArrayList<String> liste_droite, int nb_number, int nb_op){
+		if (nb_number == nb_op + 1) {
+			ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
+			result.add(liste_gauche);
+			result.add(liste_droite);
+			return result;
+		}else {
+			String e = liste_droite.get(0);
+			liste_gauche.add(e);
+			liste_droite.remove(0);
+			if (isNumber(e)) {
+				nb_number++;
+			}else {
+				nb_op++;
+			}
+			return split(liste_gauche, liste_droite, nb_number, nb_op);
+		}
+	}
+	
 	public static Noeud remplirArbre(String exp) {
 		ArrayList<String> liste = stringToList(exp);
 		return remplirArbre_aux(liste);
 	}
 	
 	public static Noeud remplirArbre_aux(ArrayList<String> liste) {
-		return null;
+		if (isNumber(liste.get(0))) {
+			return new Noeud(liste.get(0));
+		}else {
+			String e = liste.get(0);
+			liste.remove(0);
+			ArrayList<ArrayList<String>> branches = split(new ArrayList<String>(), liste, 0, 0);
+			return new Noeud(e, remplirArbre_aux(branches.get(0)), remplirArbre_aux(branches.get(1)));
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -89,6 +123,7 @@ public class App {
 										  new Noeud("4")),
 								new Noeud("5"));
 		System.out.println(calcul(remplirArbre("* + 32 4 5")));
+		
 	}
 
 }
