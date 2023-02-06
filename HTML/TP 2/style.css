@@ -1,0 +1,34 @@
+body {
+	display: flex;
+	flex-direction: row;
+	margin: 0px;
+}
+
+#div1{
+	background-color: blue;
+	text-align: center;
+	color: white;
+	flex: 2;
+}
+
+#div2{
+	background-color: red;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+#div2-1{
+	background-color: darkred;
+	flex: 1;
+}
+
+#div2-2{
+	background-color: indianred;
+	flex: 1;
+}
+
+#div3{
+	background-color: #43691B;
+	flex: 1;
+}
